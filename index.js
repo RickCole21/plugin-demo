@@ -1,4 +1,4 @@
-// myPlugin.js
+// Swiper.js
 (function (definition) {
   "use strict";
   // CommonJS
@@ -13,26 +13,46 @@
     // non-windowed contexts.
     var global = typeof window !== "undefined" ? window : self;
 
-    // initialize myPlugin as a global.
-    global.myPlugin = definition();
+    // initialize Swiper as a global.
+    global.Swiper = definition();
 
   } else {
-    throw new Error("This environment was not anticipated by myPlugin,Please file a bug.");
+    throw new Error("This environment was not anticipated by Swiper,Please file a bug.");
   }
 })(function () {
 
-  function sleep(long) {
-    var start = Date.now();
-    while ((Date.now() - start) < long) {
-    }
-    console.log('finish!');
+  function Swiper(element) {
+    var startX,
+      startY,
+      startTime;
+
+    element.addEventListener('touchstart', function (e) {
+      var touch = e.targetTouches[0];
+      startX = touch.screenX;
+      startY = touch.screenY;
+      startTime = new Date();
+    })
+
+    element.addEventListener('touchend', function (e) {
+      var touch = e.changedTouches[0];
+      var movedX = touch.screenX - startX;
+      var movedY = touch.screenY - startY;
+
+      var movedTime = new Date - startTime;
+      movedXLength = movedX < 0 && -movedX || movedX;
+      movedYLength = movedY < 0 && -movedY || movedY;
+
+      if (!(movedXLength < 45 || movedYLength > 45))
+        if (movedX > 0 && movedTime <= 200 && movedXLength >= 45) {
+          alert('向右滑动')
+          console.log("向右滑动");
+        } else if (movedX < 0 && movedTime <= 200 && movedXLength >= 45) {
+          alert('向左滑动')
+          console.log('向左滑动');
+        }
+
+    })
   }
 
-  function myPlugin() {
-    return {
-      sleep: sleep
-    }
-  }
-
-  return myPlugin();
+  return Swiper;
 })
