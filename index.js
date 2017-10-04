@@ -20,17 +20,18 @@
     throw new Error("This environment was not anticipated by myPlugin,Please file a bug.");
   }
 })(function () {
-  function myPlugin() {
-    return {
-      sleep: sleep
-    }
-  }
 
   function sleep(long) {
     var start = Date.now();
     while ((Date.now() - start) < long) {
     }
     console.log('finish!');
+  }
+
+  function myPlugin() {
+    return {
+      sleep: sleep
+    }
   }
 
   return myPlugin();
